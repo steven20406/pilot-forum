@@ -1,0 +1,96 @@
+body {
+    background-image: url('../image/air-08.jpg');
+    background-repeat: no-repeat;
+    background-size: 100%, 100%;
+    overflow-x: hidden;
+}
+
+h1 {
+    color: black;
+    background-color: lightblue;
+    text-align: center;
+    font-family: "arial", Serif;
+    font-size: 30px;
+    font-weight: bold;
+    padding: 7px;
+    border-radius: 5px
+}
+
+label {
+    color: yellow;
+    font-family: "Times New Roman";
+    font-size: large;
+}
+
+div {
+    overflow: hidden;
+    text-overflow : ellipsis;
+}
+
+.myheader {
+    padding: auto;
+    margin: auto;
+}
+
+button{
+    border-radius: 10px;
+    background-color: black;
+    font-family: "Times New Roman";
+    font-size: 20px;
+    color: white;
+}
+
+.btn{
+    border-radius: 10px;
+    background-color: white;
+    font-family: "Times New Roman";
+    color: black;
+}
+
+/*home.html*/
+.scoreboardarea {
+    background-color: lightblue;
+    text-align: center;
+    font-family: "Times New Roman";
+    font-size: 20px;
+    margin: 0px 20px 0px 20px;
+    border-style: double;
+}
+
+/*pilot_border.html*/
+table {
+    background-color: lightblue;
+    padding-left: 5px;
+    font-family: Arial;
+    font-size: 20px;
+    border-radius: 20px
+}
+
+.tabledata{
+    text-align: center;
+}
+
+.form-inline {
+    float: right;
+    margin-top: 7px;
+    margin-right: 52px;
+}
+
+.show_user_proifle {
+    background-color: #7ee671;
+    display: none;
+}
+
+.userprofile p {
+    font-family: "Times New Roman";
+    font-size: large;
+    margin-left: 30px;
+}
+
+#twitch_area p {
+    font-family: Arial;
+    background-color: lightblue;
+    font-size: 20px;
+    border-radius: 20px;
+    height: 40px;
+}

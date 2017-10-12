@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Specific Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <script type="text/javascript" src="JavaScript/jquery.js"></script>
+    <script type="text/javascript" src="JavaScript/navbar_event.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="CSS/style.css">
+
+    <style>
+        #textarea p {
+            font-family: "Times New Roman";
+            font-size: x-large;
+            border: double;
+            background-color: white;
+        }
+    </style>
+
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+
+    <div class="container-fluid">
+        <ul class="nav navbar-nav" id="navlist">
+            <li><a href="home.html"><i class="glyphicon glyphicon-home"></i></a></li>
+            <li><a href="pilot_board.html">Pilot Board</a></li>
+            <li><a href="pilot_chatroom.html">Online Chat Room</a></li>
+            <li><a href="#" id="usertoggle"><i class="glyphicon glyphicon-user"></i></a></li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0" onsubmit="return false">
+            <input id="search_text" class="form-control mr-sm-2" type="text" placeholder="Search Screen Name">
+            <button id="search_user" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+
+    </div>
+</nav>
+
+<div class="show_user_proifle">
+    <div id="userprofile" class="userprofile"></div>
+    <button id="logoutforum" style="margin-left: 30px">Log out</button>
+</div>
+
+<div class="container myheader">
+    <h1>Content Detail</h1>
+</div>
+<hr>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="row">
+            <!-------------left-------------->
+            <div class="col-md-2 col-md-offset-1">
+                <div style="text-align: center">
+                    <label>User Detail</label>
+                </div>
+                <div>
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th class="col-md-6" style="display: none"></th>
+                            <th class="col-md-6" style=" display: none"></th>
+                        </tr>
+                        </thead>
+                        <tbody id="userdata">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-------------middle-------------->
+
+            <div class="col-md-6">
+                <div class="form-group" id="textarea">
+                    <label>Subject:</label>
+                    <p id="subject"></p>
+                    <label>Content:</label>
+                    <p id="content"></p>
+                    <hr>
+
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th class="col-md-2">User</th>
+                            <th class="col-md-8">Comment</th>
+                            <th class="col-md-2">Date</th>
+                        </tr>
+                        </thead>
+                        <tbody id="comment_area">
+                        </tbody>
+                    </table>
+
+                    <label>Comment:</label>
+                    <textarea class="form-control" rows="5" id="comment_text"></textarea>
+                    <br>
+                    <button id="commentsubmit" style="float: right">Submit</button>
+                </div>
+            </div>
+            <!-------------right-------------->
+
+            <div class="col-md-3">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        var href = window.location.href;
+        var url = new URL(href);
+        var id = url.searchParams.get("id");
+        $.ajax({
+            url: 'getspecificcontent',
+            type: 'post',
+            data: {
+                id: id
+            },
+            dataType: "json",
+            success: function (resp) {
+                var user = resp.user;
+                $('#subject').append(resp.subject);
+                $('#content').append(resp.text);
+
+                $('#userdata').append("<tr>" +
+                    "<td class='tabledata'>User</td>" +
+                    "<td class='tabledata'>" + user.title + user.surname + "</td>" +
+                    "</tr>" +
+                    "<tr>" +
+                    "<td class='tabledata'>Screen name</td>" +
+                    "<td class='tabledata'><a href='view_user.html?id=" + user._id + "'>" + user.screenname + "</a></td>" +
+                    "</tr>" +
+                    "<tr>" +
+                    "<td class='tabledata'>E-mail</td>" +
+                    "<td class='tabledata'>" + user.email + "</td>" +
+                    "</tr>"
+                );
+
+                var comment = resp.comment;
+                var count = comment.length;
+                for (var index in comment) {
+                    var number = count - index - 1;
+                    var user = comment[number].user;
+                    $('#comment_area').append("<tr>" +
+                        "<td><a href='view_user.html?id=" + user._id + "'>" + user.screenname + "</a></td>" +
+                        "<td>" + comment[number].comment_text + "</td>" +
+                        "<td>" + comment[number].yeardate + "</td>" +
+                        "</tr>");
+                }
+
+            }
+        })
+    })
+
+    $('#commentsubmit').click(function () {
+        var text = $('#comment_text').val();
+
+        var date = new Date();
+        var month = date.getUTCMonth() + 1; //months from 1-12
+        var day = date.getUTCDate();
+        var year = date.getUTCFullYear();
+        var yeardate = year + "-" + month + "-" + day;
+
+        var href = window.location.href;
+        var url = new URL(href);
+        var id = url.searchParams.get("id");
+
+        $.ajax({
+            url: 'addcomment',
+            type: 'post',
+            data: {
+                contentid: id,
+                text: text,
+                yeardate: yeardate
+            },
+            dataType: 'json',
+            success: function (resp) {
+                if (resp.result == 'false') {
+                    alert("Add fail, something went wrong!");
+                }
+                else {
+                    alert("Make a comment successfully.");
+                    location.reload();
+                }
+            }
+        })
+    })
+
+</script>
+
+
+</body>
+</html>

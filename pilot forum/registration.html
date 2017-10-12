@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Registration</title>
+
+    <script type="text/javascript" src="JavaScript/jquery.js"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="CSS/style.css">
+
+    <style>
+        #checkbox{
+            float : left;
+        }
+
+        label {
+            color: black;
+        }
+    </style>
+
+    <script>
+
+        function checkEmptyBox() {
+            if (reg.title.value == "00") {
+                alert("Please choose the title of yours");
+                return false;
+            }
+            if (reg.screenname.value == "") {
+                alert("Please enter your surname");
+                reg.screenname.focus();
+                reg.screenname.style.border = "solid 3px red";
+                return false;
+            }
+            if (reg.surname.value == "") {
+                alert("Please enter your forename");
+                reg.surname.focus();
+                reg.surname.style.border = "solid 3px red";
+                return false;
+            }
+            if (reg.password.value == "") {
+                alert("Please set up your password");
+                reg.password.focus();
+                reg.password.style.border = "solid 3px red";
+                return false;
+            }
+            if (reg.repwd.value == "") {
+                alert("Please confrim your password");
+                reg.repwd.focus();
+                reg.repwd.style.border = "solid 3px red";
+                return false;
+            }
+            if (reg.password.value.length < 6 || reg.repwd.value.length < 6) {
+                alert("The length of password must over 6 characters !");
+                reg.password.focus();
+                reg.password.style.border = "solid 3px red";
+                reg.repwd.focus();
+                reg.repwd.style.border = "solid 3px red";
+                return false;
+            }
+            if (reg.password.value != reg.repwd.value) {
+                alert("The password does not match");
+                reg.password.focus();
+                reg.password.style.border = "solid 3px red";
+                reg.repwd.focus();
+                reg.repwd.style.border = "solid 3px red";
+                return false;
+            }
+            if (reg.email.value == "") {
+                alert("Please enter your email address");
+                reg.email.focus();
+                reg.email.style.border = "solid 3px red";
+                return false;
+            }
+            if(document.getElementById("checkCondition").checked != true){
+                alert("Please read ");
+                return false;
+            }
+        }
+    </script>
+</head>
+<body>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <ul class="nav navbar-nav" id="navlist">
+            <li><a href="index.html"><i class="glyphicon glyphicon-hand-left"></i></a></li>
+        </ul>
+
+    </div>
+</nav>
+
+<div class="container">
+
+    <form class="well form-horizontal" method="post"
+          id="reg" name="reg" onsubmit="return false;">
+
+        <fieldset>
+
+            <!-- Form Name -->
+            <legend align="center"><b>Registration</b></legend>
+
+
+            <!-- Text input : Email-->
+            <div class="form-group">
+                <label class="col-md-4 control-label">Email :</label>
+                <div class="col-md-4 inputGroupContainer">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                        <input id="email" name="email" placeholder="E-Mail Address : (ex: @gmail.com)"
+                               class="form-control" type="email">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Select Bar : Title-->
+            <div class="form-group">
+                <label class="col-md-4 control-label">Title</label>
+                <div class="col-md-4 selectContainer">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+                        <select id="title" name="userTitle" class="form-control selectpicker">
+                            <option value="00">Please select your title</option>
+                            <option value="Mr.">Mr.</option>
+                            <option value="Mrs.">Mrs.</option>
+                            <option value="Miss">Miss.</option>
+                            <option value="Prof.">Prof.</option>
+                            <option value="Dr.">Dr.</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Text input : Surname-->
+
+            <div class="form-group">
+                <label class="col-md-4 control-label">Surname (Family Name):</label>
+                <div class="col-md-4 inputGroupContainer">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        <input id="surname" name="surname" placeholder="Your surname" class="form-control"
+                               type="text">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Text input : Screen name-->
+
+            <div class="form-group">
+                <label class="col-md-4 control-label">Screen name (Game ID):</label>
+                <div class="col-md-4 inputGroupContainer">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        <input id="screenname" name="screenname" placeholder="Your screen name" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Text input : Twitter Account-->
+
+            <div class="form-group">
+                <label class="col-md-4 control-label">Twitter Username (Optional):</label>
+                <div class="col-md-4 inputGroupContainer">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        <input id="twitter" name="twitter" placeholder="Your twitter username" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Text input : Twitter Account-->
+
+            <div class="form-group">
+                <label class="col-md-4 control-label">Twitch ID (Optional):</label>
+                <div class="col-md-4 inputGroupContainer">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        <input id="twitch" name="twitch" placeholder="Your twitch id" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Text input : Password-->
+
+            <div class="form-group">
+                <label class="col-md-4 control-label">Password :</label>
+                <div class="col-md-4 inputGroupContainer">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                        <input id="pwd" name="password" value="" placeholder="The password must over 6 characters"
+                               class="form-control" type="password">
+                    </div>
+                </div>
+            </div>
+            <!-- Text input : Re-enter Password-->
+            <div class="form-group">
+                <label class="col-md-4 control-label">Re-Entered Password :</label>
+                <div class="col-md-4 inputGroupContainer">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                        <input id="repwd" name="repwd" placeholder="Please Re-Entered your password"
+                               class="form-control" type="password">
+                    </div>
+                </div>
+            </div>
+
+            <!-- term of use -->
+            <div class="form-group">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title">Terms and conditions</h3>
+                        </div>
+
+                        <div class="modal-body">
+                            <p>This is the content of the regulation of using this app</p>
+                        </div>
+
+                        <div class="modal-footer">
+                            <label id="checkbox" class="checkbox-inline"><input type="checkbox" id="checkCondition" name="checkbox" value="123">I agree the term of use and I will adhere the regulation</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end of term   -->
+
+            <!-- Button -->
+            <div class="form-group">
+                <label class="col-md-4 control-label"></label>
+                <div class="col-md-2 col-md-offset-1" style="padding-left: 60px">
+                    <button type="submit" id="buttonSend" class="btn btn-warning" name="next">Next
+                        <span class="glyphicon glyphicon-send"></span></button>
+                </div>
+            </div>
+
+        </fieldset>
+    </form>
+
+    <script>
+
+        $("#buttonSend").on('click', function () {
+
+            var check = checkEmptyBox();
+
+            var title = $("#title").val();
+            var email = $("#email").val();
+            var surname = $("#surname").val();
+            var screenname = $("#screenname").val();
+            var twitter_username = $("#twitter").val();
+            var twitch_id = $("#twitch").val();
+            var pwd = $("#pwd").val();
+            if(twitter_username==""){
+                twitter_username = "None";
+            }
+
+            if(check==false) {
+                console.log("Form not match!");
+            }
+            else {
+                $.ajax({
+                    url: '/register',
+                    type: 'post',
+                    data: {
+                        title: title,
+                        email: email,
+                        surname: surname,
+                        screenname: screenname,
+                        twitter_username:twitter_username,
+                        twitch_id:twitch_id,
+                        password: pwd
+                    },
+                    dataType: "json",
+                    success: function (resp) {
+                        if(resp.result=='exist'){
+                            alert('Account already exist');
+                        }
+                        else{
+                            alert('Register success!');
+                            window.location.href="index.html";
+                        }
+                    }
+                })
+            }
+        })
+    </script>
+</div>
+</body>
+</html>

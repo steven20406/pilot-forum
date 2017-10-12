@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Pilot Board</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <script type="text/javascript" src="JavaScript/jquery.js"></script>
+    <script type="text/javascript" src="JavaScript/navbar_event.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="CSS/style.css">
+
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+
+    <div class="container-fluid">
+        <ul class="nav navbar-nav" id="navlist">
+            <li><a href="home.html"><i class="glyphicon glyphicon-home"></i></a></li>
+            <li class="active"><a href="pilot_board.html">Pilot Board</a></li>
+            <li><a href="pilot_chatroom.html">Online Chat Room</a></li>
+            <li><a href="#" id="usertoggle"><i class="glyphicon glyphicon-user"></i></a></li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0" onsubmit="return false">
+            <input id="search_text" class="form-control mr-sm-2" type="text" placeholder="Search Screen Name">
+            <button id="search_user" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+
+    </div>
+</nav>
+
+<div class="show_user_proifle">
+    <div id="userprofile" class="userprofile"></div>
+    <button id="logoutforum" style="margin-left: 30px">Log out</button>
+</div>
+
+<div class="container myheader">
+    <h1>Pilot Board</h1>
+</div>
+<hr>
+
+<!---------------Text Area----------------->
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="row">
+            <!-------------left-------------->
+            <div class="col-md-1 col-md-offset-2">
+                <button id="textareatoggle" title="click to write a content">Write a content</button>
+            </div>
+            <!-------------middle-------------->
+
+            <div class="col-md-6">
+                <div class="form-group" id="textarea" style="display: none">
+                    <label>Subject:</label>
+                    <input type="text" class="form-control" id="subject">
+                    <label>Content:</label>
+                    <textarea class="form-control" rows="5" id="content"></textarea>
+                    <br>
+                    <button id="contentsubmit" style="float: right" type="submit">Submit</button>
+                </div>
+
+                <div>
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th class="col-md-7">Subject</th>
+                            <th class="col-md-2" style="text-align: center">User</th>
+                            <th class="col-md-1" style="text-align: center">Comment</th>
+                            <th class="col-md-2" style="text-align: center">Time</th>
+                        </tr>
+                        </thead>
+                        <tbody id="contentarea">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-------------right-------------->
+
+            <div class="col-md-3">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $.post("getcontent", function (data) {
+            if (data.length == 0) {
+                $('#content_area').append("No content found!");
+            }
+            else {
+                var count = data.length;
+                for (var index in data) {
+                    var number = count - index - 1;
+
+                    $('#contentarea').append("<tr>"+
+                    "<td><a href='specific_content.html?id="+data[number]._id+"'>" + data[number].subject + "</a></td>"+
+                    "<td class='tabledata'><a href='view_user.html?id="+data[number].user._id+"'>"+data[number].user.screenname +"</a></td>"+
+                    "<td class='tabledata'>"+data[number].comment.length +"</td>"+
+                    "<td class='tabledata'>"+data[number].yeardate +"</td>"+
+                    "</tr>"
+                    );
+                }
+            }
+        })
+    });
+
+    $('#textareatoggle').click(function () {
+        $('#textarea').fadeToggle(500);
+    });
+
+    $('#contentsubmit').click(function () {
+        var contenttext = $("#content").val();
+        var subject = $("#subject").val();
+
+        var date = new Date();
+        var month = date.getUTCMonth() + 1; //months from 1-12
+        var day = date.getUTCDate();
+        var year = date.getUTCFullYear();
+        var yeardate = year + "-" + month + "-" + day;
+
+        $.ajax({
+            url: '/addcontent',
+            type: 'post',
+            data: {
+                subject: subject,
+                contenttext: contenttext,
+                yeardate: yeardate
+            },
+            dataType: "json",
+            success: function (resp) {
+                if (resp.length != 0) {
+                    alert('Insert successful.');
+                    location.reload();
+                }
+            }
+        })
+    });
+</script>
+
+</body>
+</html>

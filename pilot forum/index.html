@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Index</title>
+
+    <script type="text/javascript" src="JavaScript/jquery.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="CSS/style.css">
+
+    <script>
+
+        function check() {
+            if (loginform.email.value == "") {
+                alert("Please enter your email");
+                return false;
+            } else if (loginform.password.value == "") {
+                alert("Please enter your password");
+                return false;
+            }
+            else {
+                return true;
+            }
+        }
+    </script>
+
+    <style>
+        h1 {
+            background-color: transparent;
+            margin-top: 75px;
+        }
+
+        img {
+            margin-top: 50px;
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+
+        .form-group.input-group {
+            border-radius: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<!--Title of the app  -->
+<h1 align="center"><b>Pilot Forum Website</b></h1>
+
+<!-- University of Sheffield picture put it on center by using bootstrap -->
+<img src="https://i.ytimg.com/vi/JrIu9rkAcyQ/maxresdefault.jpg"
+     class="img-responsive center-block" width="1200" height="600" alt="the picture of University Of Sheffield"/>
+
+<!--Star content from here  -->
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+
+            <!--input form of email and pwd -->
+
+            <div style="padding: 20px;" id="form-olvidado">
+                <form accept-charset="UTF-8" role="form" id="loginform" name="loginform" method="post" onsubmit="return false;">
+                    <fieldset>
+                        <!-- input of Email account -->
+
+                        <div class="form-group input-group">
+                            <span class="input-group-addon">@ </span>
+
+                            <input class="form-control" placeholder="Please enter your Email" id="email" name="email" type="email" required="required" autofocus="">
+                        </div>
+                        <div class="form-group input-group">
+
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+
+                            <!-- input of password -->
+                            <input class="form-control" placeholder="Please Enter the password" id="password" name="password" type="password" value="" required="required">
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" id="buttonSend" class="btn btn-primary btn-block">Log in</button>
+                            <hr>
+                            <a href="registration.html" target="_new" class="btn">Register</a>
+                            <p class="help-block">
+                                <a class="pull-right text-muted" href="forgotten_password.html"
+                                   target="_new" id="olvidado">
+                                    <strong style="color: red; font-size: 20px; font-family: 'Times New Roman'">Forgot
+                                        your password?</strong>
+                                </a>
+                            </p>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+
+    $("#buttonSend").on('click', function () {
+        var email = $("#email").val();
+        var password = $("#password").val();
+        var checkempty = check();
+
+        if (checkempty == false) {
+            console.log('Empty space');
+        }
+        else {
+            $.ajax({
+                url: '/login',
+                type: 'post',
+                data: {
+                    //The data
+                    email: email,
+                    password: password,
+                },
+                dataType: "json",
+                success: function (resp) {
+                    var result = resp.result;
+                    if (result == 'Account not exist') {
+                        alert('Account not exist!');
+                    }
+                    else if (result == 'Wrong password') {
+                        alert('Wrong password!');
+                    }
+                    else {
+                        window.location.href = "home.html";
+                    }
+                }
+            })
+        }
+    })
+</script>
+
+</body>
+</html>

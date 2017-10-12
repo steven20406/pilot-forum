@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Edit Personal Profile</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <script type="text/javascript" src="JavaScript/jquery.js"></script>
+    <script type="text/javascript" src="JavaScript/navbar_event.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="CSS/style.css">
+</head>
+
+<style>
+    .container p {
+        font-family: "Times New Roman";
+        font-size: 20px;
+        font-weight: bold;
+        padding-top: 3px;
+    }
+
+    .container label {
+        color: black;
+    }
+</style>
+
+<body>
+
+<nav class="navbar navbar-inverse">
+
+    <div class="container-fluid">
+        <ul class="nav navbar-nav" id="navlist">
+            <li><a href="home.html"><i class="glyphicon glyphicon-home"></i></a></li>
+            <li><a href="pilot_board.html">Pilot Board</a></li>
+            <li><a href="pilot_chatroom.html">Online Chat Room</a></li>
+            <li class="active"><a href="#" id="usertoggle"><i class="glyphicon glyphicon-user"></i></a></li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0" onsubmit="return false">
+            <input id="search_text" class="form-control mr-sm-2" type="text" placeholder="Search Screen Name">
+            <button id="search_user" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+
+    </div>
+</nav>
+
+<div class="show_user_proifle">
+    <div id="userprofile" class="userprofile"></div>
+    <button id="logoutforum" style="margin-left: 30px">Log out</button>
+</div>
+
+<div class="container myheader">
+    <h1>Personal Profile</h1>
+</div>
+<hr>
+<div class="container">
+
+    <form class="well form-horizontal" method="post"
+          id="reg" name="reg" onsubmit="return false;">
+
+        <fieldset>
+
+            <!-- Form Name -->
+            <legend align="center"><b>Edit Personal Profile</b></legend>
+
+            <!-- User Name -->
+            <div class="form-group">
+                <label class="col-md-4 control-label">User :</label>
+                <div class="col-md-4 inputGroupContainer">
+                    <div id="name_part"></div>
+                </div>
+            </div>
+
+            <!--Email-->
+            <div class="form-group">
+                <label class="col-md-4 control-label">Email :</label>
+                <div class="col-md-4 inputGroupContainer">
+                    <div id="email_part"></div>
+                </div>
+            </div>
+
+            <!-- Text input : Screen name-->
+
+            <div class="form-group">
+                <label class="col-md-4 control-label">Screen name (Game ID):</label>
+                <div class="col-md-4 inputGroupContainer">
+                    <div id="screen_name"></div>
+                </div>
+            </div>
+
+            <!-- Text input : Twitter Account-->
+
+            <div class="form-group">
+                <label class="col-md-4 control-label">Twitter Username (Optional):</label>
+                <div class="col-md-4 inputGroupContainer">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        <input id="twitter" name="twitter" placeholder="Your twitter username" class="form-control"
+                               type="text">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Text input : Twitter Account-->
+
+            <div class="form-group">
+                <label class="col-md-4 control-label">Twitch ID (Optional):</label>
+                <div class="col-md-4 inputGroupContainer">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        <input id="twitch" name="twitch" placeholder="Your twitch id" class="form-control" type="text">
+                    </div>
+                    <br>
+                    <div>
+                        <button id="password_area_toggle">Change Password</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="password_area" style="display: none">
+                <!-- Text input : Password-->
+
+                <div class="form-group">
+                    <label class="col-md-4 control-label">Password :</label>
+                    <div class="col-md-4 inputGroupContainer">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                            <input id="pwd" name="password" value="" placeholder="The password must over 6 characters"
+                                   class="form-control" type="password">
+                        </div>
+                    </div>
+                </div>
+                <!-- Text input : Re-enter Password-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label">Re-Entered Password :</label>
+                    <div class="col-md-4 inputGroupContainer">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                            <input id="repwd" name="repwd" placeholder="Please Re-Entered your password"
+                                   class="form-control" type="password">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Button -->
+            <div class="form-group">
+                <label class="col-md-4 control-label"></label>
+                <div class="col-md-2 col-md-offset-1" style="padding-left: 60px">
+                    <button type="submit" id="buttonSend" class="btn btn-warning" name="next">Submit
+                        <span class="glyphicon glyphicon-send"></span></button>
+                </div>
+            </div>
+
+        </fieldset>
+    </form>
+
+    <script>
+
+        $(document).ready(function () {
+
+            $('#password_area_toggle').click(function () {
+                $('#password_area').fadeToggle(0);
+            })
+
+            $.post("getuser", function (data) {
+
+                $('#name_part').append('<p>' + data[0].title + ' ' + data[0].surname + '</p>');
+                $('#email_part').append('<p>' + data[0].email + '</p>');
+                $('#screen_name').append('<p>' + data[0].screenname + '</p>');
+            })
+        });
+
+        $("#buttonSend").on('click', function () {
+
+            var twitter_username = $("#twitter").val();
+            var twitch_id = $("#twitch").val();
+            var password = $("#pwd").val();
+
+            function check_password() {
+                if($("#pwd").val() != $("#repwd").val()){
+                    alert("Password and verify password not match!")
+                    return false;
+                } else if ($("#pwd").val()!="" && $("#pwd").val().length<6){
+                    alert("Password must longer than 6 characters !")
+                    return false;
+                } else if (twitter_username=="" && twitch_id=="" && password==""){
+                    alert("No profile update !")
+                    return false;
+                }
+                else {
+                    return true;
+                }
+            }
+
+            if(check_password()) {
+
+                $.post("getuser", function (data) {
+
+                    if (twitter_username == "") {
+                        twitter_username = data[0].twitter_username;
+                    }
+                    if (twitch_id == "") {
+                        twitch_id = data[0].twitch_id;
+                    }
+                    if (password == "") {
+                        password = {
+                            state : "empty",
+                            password : data[0].password
+                        };
+                    }else {
+                        password = {
+                            state : "new",
+                            password : password
+                        };
+                    }
+
+
+                    $.ajax({
+                        url: '/edit_personal_profile',
+                        type: 'post',
+                        data: {
+                            email: data[0].email,
+                            twitter_username: twitter_username,
+                            twitch_id: twitch_id,
+                            password : password
+                        },
+                        dataType: "json",
+                        success: function (resp) {
+                            if (resp) {
+                                alert("Profile Change Successful!");
+                                window.location.href = 'home.html';
+                            }
+                        }
+                    })
+                })
+            }
+        })
+    </script>
+</div>
+
+</body>
+</html>

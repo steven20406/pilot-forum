@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Search User</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <script type="text/javascript" src="JavaScript/jquery.js"></script>
+    <script type="text/javascript" src="JavaScript/navbar_event.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="CSS/style.css">
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+
+    <div class="container-fluid">
+        <ul class="nav navbar-nav" id="navlist">
+            <li><a href="home.html"><i class="glyphicon glyphicon-home"></i></a></li>
+            <li><a href="pilot_board.html">Pilot Board</a></li>
+            <li><a href="pilot_chatroom.html">Online Chat Room</a></li>
+            <li><a href="#" id="usertoggle"><i class="glyphicon glyphicon-user"></i></a></li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0" onsubmit="return false">
+            <input id="search_text" class="form-control mr-sm-2" type="text" placeholder="Search Screen Name">
+            <button id="search_user" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+
+    </div>
+</nav>
+
+<div class="show_user_proifle">
+    <div id="userprofile" class="userprofile"></div>
+    <button id="logoutforum" style="margin-left: 30px">Log out</button>
+</div>
+
+<div class="container myheader">
+    <h1>User List</h1>
+</div>
+<hr>
+
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="row">
+
+
+            <!-------------left-------------->
+            <div class="col-md-3">
+            </div>
+
+            <!-------------middle-------------->
+
+            <div class="col-md-6">
+                <div>
+                    <table id="contentheader" class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th class="col-md-4" style="text-align: center">Screen Name</th>
+                            <th class="col-md-4" style="text-align: center">Surname</th>
+                            <th class="col-md-4" style="text-align: center">Email</th>
+                        </tr>
+                        </thead>
+                        <tbody id="contentarea">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-------------right-------------->
+
+            <div class="col-md-3">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        var href = window.location.href;
+        var url = new URL(href);
+        var search_user_text = url.searchParams.get("search");
+
+        $.ajax({
+            url : 'search_user',
+            type : 'post',
+            data : {
+                search_user_text : search_user_text,
+            },
+            dataType : 'json',
+            success : function (resp) {
+                if(resp.length==0){
+                    $('#contentheader').html("<p style='text-align: center; font-size: x-large; font-family: Times New Roman'>No user match.</p>");
+                }
+                else{
+                    for (var index in resp) {
+                        $('#contentarea').append("<tr>" +
+                            "<td class='tabledata'><a href='view_user.html?id=" + resp[index]._id + "'>" + resp[index].screenname + "</a></td>" +
+                            "<td class='tabledata'>" + resp[index].title+" "+resp[index].surname + "</td>" +
+                            "<td class='tabledata'>" + resp[index].email + "</td>" +
+                            "</tr>"
+                        );
+                    }
+                }
+            }
+        });
+    })
+</script>
+
+</body>
+</html>

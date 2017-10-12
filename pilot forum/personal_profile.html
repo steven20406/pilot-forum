@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Personal Profile</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <script type="text/javascript" src="JavaScript/jquery.js"></script>
+    <script type="text/javascript" src="JavaScript/navbar_event.js"></script>
+    <script type="text/javascript" src="JavaScript/personal_profile_event.js"></script>
+    <script src="https://embed.twitch.tv/embed/v1.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="CSS/style.css">
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+
+    <div class="container-fluid">
+        <ul class="nav navbar-nav" id="navlist">
+            <li><a href="home.html"><i class="glyphicon glyphicon-home"></i></a></li>
+            <li><a href="pilot_board.html">Pilot Board</a></li>
+            <li><a href="pilot_chatroom.html">Online Chat Room</a></li>
+            <li><a href="#" title="content post and streaming page toggle" id="twitch_streaming_toggle">User Twitch Streaming</a></li>
+            <li class="active"><a href="#" id="usertoggle"><i class="glyphicon glyphicon-user"></i></a></li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0" onsubmit="return false">
+            <input id="search_text" class="form-control mr-sm-2" type="text" placeholder="Search Screen Name">
+            <button id="search_user" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+
+    </div>
+</nav>
+
+<div class="show_user_proifle">
+    <div id="userprofile" class="userprofile"></div>
+    <button id="logoutforum" style="margin-left: 30px">Log out</button>
+</div>
+
+<div class="container myheader">
+    <h1>Personal Profile</h1>
+</div>
+<hr>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="row">
+
+            <!-------------left-------------->
+            <div class="col-md-2 col-md-offset-1">
+                <div style="text-align: center">
+                    <label>Your Detail</label>
+                </div>
+                <div>
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th class="col-md-6" style="display: none"></th>
+                            <th class="col-md-6" style="display: none"></th>
+                        </tr>
+                        </thead>
+                        <tbody id="userdata">
+                        </tbody>
+                    </table>
+                    <button id="edit_profile" style="margin-left: 30px; float: right" onclick="location.href='edit_personal_profile.html'";>Edit Personal Profile</button>
+                </div>
+            </div>
+
+            <!-------------middle-------------->
+
+            <div class="col-md-6">
+                <div id="postcontent">
+                    <div style="text-align: center">
+                        <label>Your Content Post</label>
+                    </div>
+                    <div>
+                        <table id="contentheader" class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th class="col-md-8">Subject</th>
+                                <th class="col-md-2" style="text-align: center">Comment</th>
+                                <th class="col-md-2" style="text-align: center">Time</th>
+                            </tr>
+                            </thead>
+                            <tbody id="contentarea">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!--Twitch Area-->
+                <div id="twitch_area" style="display: none";>
+                    <div style="text-align: center">
+                        <label>User Twitch Streaming</label>
+                    </div>
+                    <div id="twitch-embed"></div>
+                </div>
+            </div>
+
+            <!-------------right-------------->
+
+            <div class="col-md-3">
+                <div style="text-align: center">
+                    <label>User Twit</label>
+                </div>
+                <table id="Twit" class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th class="col.md-1"></th>
+                        <th class="col-md-7" style="text-align: center">Twit</th>
+                        <th class="col-md-4" style="text-align: center">Time</th>
+                    </tr>
+                    </thead>
+                    <tbody id="twitarea">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
