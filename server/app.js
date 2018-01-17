@@ -16,7 +16,7 @@ var server = http.createServer(app);
 
 io = io.listen(server);
 
-server.listen(4000);
+server.listen(4444);
 
 var clients = [];
 io.sockets.on('connection', function (socket) {
